@@ -1,0 +1,5 @@
+Frontend: Angular
+Backend: Nodejs express
+Database: Postgres
+
+Run master Database file, path = taskManagementClient/server/dump/master.sql

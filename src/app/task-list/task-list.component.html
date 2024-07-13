@@ -1,0 +1,235 @@
+<div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card" style="border-radius: .75rem; background-color: #fffeed;">
+            <div class="card-body py-4 px-4 px-md-5">
+              <div class="">
+                <div class="d-flex col-12 justify-content-end m-3">
+                <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentUser.name}}</button>
+                  <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button class="dropdown-item" (click)="editProfile()">profile</button>
+                    <button class="dropdown-item" (click)="logout()">logout</button>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="">
+                    <div class="row" style="border-radius: .75rem; background-color: #ecf1f3;">
+                      <div class="col-6">
+                        <h3 class="p-2">Task Manager</h3>
+                      </div>
+                    </div>
+              </div>
+              <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
+                <div class="col-xs-2">
+                  <label>Status</label>
+                <select (change)="filterTask('status')" class="form-control" [(ngModel)]="filter">
+                  <option value="all">All</option>
+                  <option value="pending">{{TASK_STATUS.pending}}</option>
+                  <option value="completed">{{TASK_STATUS.completed}}</option>
+                  <option value="active">{{TASK_STATUS.active}}</option>
+                </select>
+                </div>
+                <div class="col-xs-2 px-2">
+                  <label>Priority</label>
+                  <select (change)="filterTask('prio')" class="form-control" [(ngModel)]="prio">
+                    <option value="all">All</option>
+                    <option value="High">{{TASK_PRIO.HIGH}}</option>
+                    <option value="Low">{{TASK_PRIO.LOW}}</option>
+                    <option value="Medium">{{TASK_PRIO.MED}}</option>
+                  </select>
+                </div>
+                <button  type="button" class="btn btn-primary mx-2" (click)="openModalFunction(addTaskModal)">Add</button>
+              </div>
+              <div class="scrollingTable col m-0 p-0" style="max-width: 100%; overflow-x: scroll;">
+                <table class="table table-striped col" >
+                    <thead class="tableHeaderCSS">
+                        <tr>
+                            <th scope="col" style="width: 10%; ">Task</th>
+                            <th scope="col" style="width: 35%;">Description</th>
+                            <th scope="col" style="width: 15%;">Due date</th>
+                            <th scope="col" style="width: 10%;">Status</th>
+                            <th scope="col" style="width: 15%;">Priority</th>
+                            <th scope="col"  style="width: 15%; text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let task of taskList">
+                            <tr class="pointerCursor" scope="row">
+                                <td class="labletext">
+                                    {{task.title}}
+                                </td>
+                                <td class="labletext">{{task.description}}</td>
+                                <td class="labletext">{{task.created_time| date}}</td>
+                                <td class="labletext">{{task.status==='active'?'In-progress':task.status}}</td>
+                                <td class="labletext">{{task.priority}}</td>
+                                <td >
+                                  <button type="button" class="btn btn-link" (click)="openViewModalFunction(viewTaskModal, task)">
+                                    <i class="fa fa-eye fa-lg"></i>
+                                  </button>
+                                  <button type="button" class="btn btn-link" (click)="openEditModalFunction(editTaskModal,task)">
+                                  <i class="fa fa-pencil fa-lg"></i>
+                                </button>
+                                <button type="button" class="btn btn-link" (click)="deleteTask(task)">
+                                  <i class="fa fa-trash fa-lg"></i>
+                                </button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<ng-template #addTaskModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Task</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModalFunction(addForm)"></button>  
+  </div>
+  <form [formGroup]="addForm" (ngSubmit)="addTask()">
+    <div class="modal-body">
+      <div class="modal-body">
+          <div class="form-group">
+              <label class="fw-bold">Title</label>
+              <input type="text" formControlName="title" class="form-control"  />
+              <div *ngIf="(addForm.controls.title.touched || addSubmitted) && addForm.controls.title.errors" class="invalid">
+                  <div *ngIf=" (addForm.controls.title.touched || addSubmitted) && (addForm.controls.title.errors['required'])">* Title is required</div>
+                  <!-- <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors['minlength'])">min 5 char</div> -->
+                </div>
+          </div>
+          <div class="form-group">
+              <label class="fw-bold">Comment</label>
+              <textarea type="text" rows="4" cols="50" formControlName="text" class="form-control" ></textarea>
+              <div *ngIf="(addForm.controls.text.touched || addSubmitted) && addForm.controls.text.errors" class="invalid">
+                  <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors['required'])">* Comment is required</div>
+                  <!-- <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors?['minlength'])">* Min 5 char</div> -->
+                </div>
+          </div>
+          <div class="form-group">
+            <label class="fw-bold">Due date</label>
+            <input id="startDate" class="form-control" type="date" formControlName="date" [min]="minDate"/>
+            <div *ngIf="(addForm.controls.date.touched || addSubmitted) && addForm.controls.date.errors" class="invalid">
+                <div *ngIf=" (addForm.controls.date.touched || addSubmitted) && (addForm.controls.date.errors['required'])">* Date is required</div>
+                <!-- <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors['minlength'])">min 5 char</div> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="fw-bold">Priority</label>
+            <select formControlName="priority" class="form-control">
+              <option value="High">{{TASK_PRIO.HIGH}}</option>
+              <option value="Low">{{TASK_PRIO.LOW}}</option>
+              <option value="Medium">{{TASK_PRIO.MED}}</option>
+            </select>
+            <div *ngIf="(addForm.controls.priority.touched || addSubmitted) && addForm.controls.priority.errors" class="invalid">
+              <div *ngIf=" (addForm.controls.priority.touched || addSubmitted) && (addForm.controls.priority.errors['required'])">* required</div>
+          </div>
+          </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModalFunction(addForm)">Close</button>
+      <button type="button" class="btn btn-secondary" type="submit">Add</button>
+
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #editTaskModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Task</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModalFunction(editForm)"></button>  
+  </div>
+  <form [formGroup]="editForm" (ngSubmit)="updateTask()">
+    <div class="modal-body">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="fw-bold">Title</label>
+          <input type="text" formControlName="title" class="form-control"  />
+          <div *ngIf="(editForm.controls.title.touched || editSubmitted) && editForm.controls.title.errors" class="invalid">
+              <div *ngIf=" (editForm.controls.title.touched || editSubmitted) && (editForm.controls.title.errors['required'])">* Title is required</div>
+              <!-- <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors['minlength'])">min 5 char</div> -->
+            </div>
+      </div>
+      <div class="form-group">
+          <label class="fw-bold">Comment</label>
+          <textarea type="text" rows="4" cols="50" formControlName="text" class="form-control" ></textarea>
+          <div *ngIf="(editForm.controls.text.touched || editSubmitted) && editForm.controls.text.errors" class="invalid">
+              <div *ngIf="(editForm.controls.text.touched || editSubmitted) && (editForm.controls.text.errors['required'])">* Comment is required</div>
+              <!-- <div *ngIf="(addForm.controls.text.touched || addSubmitted) && (addForm.controls.text.errors?['minlength'])">* Min 5 char</div> -->
+
+            </div>
+      </div>
+      <div class="form-group">
+          <label class="fw-bold">status</label>
+          <select formControlName="status" class="form-control">
+            <option value="pending">{{TASK_STATUS.pending}}</option>
+                  <option value="completed">{{TASK_STATUS.completed}}</option>
+                  <option value="active">{{TASK_STATUS.active}}</option>
+          </select>
+      </div>
+      <div class="form-group">
+        <label class="fw-bold">Priority</label>
+        <select formControlName="priority" class="form-control">
+          <option value="High">{{TASK_PRIO.HIGH}}</option>
+          <option value="Low">{{TASK_PRIO.LOW}}</option>
+          <option value="Medium">{{TASK_PRIO.MED}}</option>
+        </select>
+        <div *ngIf="(editForm.controls.priority.touched || editSubmitted) && editForm.controls.priority.errors" class="invalid">
+          <div *ngIf=" (editForm.controls.priority.touched || editSubmitted) && (editForm.controls.priority.errors['required'])">* required</div>
+      </div>
+      </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeModalFunction(editForm)">Close</button>
+      <button type="button" class="btn btn-secondary" type="submit">edit</button>
+
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #viewTaskModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">View Task</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModalFunction(null)"></button>  
+  </div>
+  <div class="container">
+    <div class="row p-2 m-2">
+      <div class="col-4">
+        <label class="fw-bold">Title</label>
+    </div>
+      <div class="col-8 labletext">
+        <label>{{viewTask.title}}</label>
+    </div>
+    </div>
+    <div class="row p-2 m-2">
+      <div class="col-4">
+        <label class="fw-bold">Description</label>
+    </div>
+      <div class="col-8 labletext">
+        <label>{{viewTask.description}}</label>
+    </div>
+  </div>
+    <div class="row p-2 m-2">
+        <div class="col-4">
+          <label class="fw-bold">Status</label>
+      </div>
+        <div class="col-8 labletext">
+          <label>{{viewTask.status}}</label>
+      </div>
+    </div>
+    <div class="row p-2 m-2">
+      <div class="col-4">
+        <label class="fw-bold">Date</label>
+    </div>
+      <div class="col-6">
+        <label>{{viewTask.created_time|date}}</label>
+    </div>
+  </div>
+</div>
+</ng-template>

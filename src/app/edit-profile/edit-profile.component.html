@@ -1,0 +1,94 @@
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card" style="border-radius: .75rem; background-color: #fffeed;">
+          <div class="card-body py-4 px-4 px-md-5">
+            <div class="">
+              <div class="d-flex col-12 justify-content-end m-3">
+              <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>{{currentUser.name}}</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button class="dropdown-item" (click)="gottotask()">Task</button>
+                  <button class="dropdown-item" (click)="openModalFunction(resetpass)">Reset Password</button>
+                  <button class="dropdown-item" (click)="logout()">logout</button>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="">
+                <div class="row" style="border-radius: .75rem; background-color: #ecf1f3;">
+                    <div class="container" >
+                        <div class="row p-2 m-2">
+                          <div class="col-4" style="text-align: right;">
+                            <label class="fw-bold">Name</label>
+                        </div>
+                          <div class="col-8 labletext">
+                            <label>{{currentUser.name}}</label>
+                        </div>
+                        </div>
+                        <div class="row p-2 m-2">
+                          <div class="col-4" style="text-align: right;">
+                            <label class="fw-bold">Email</label>
+                        </div>
+                          <div class="col-8 labletext">
+                            <label>{{currentUser.email}}</label>
+                        </div>
+                      </div>
+                        <div class="row p-2 m-2">
+                            <div class="col-4" style="text-align: right;">
+                              <label class="fw-bold">Role</label>
+                          </div>
+                            <div class="col-8 labletext">
+                              <label>{{currentUser.role}}</label>
+                          </div>
+                        </div>
+                        <div class="row p-2 m-2">
+                            <div class="col-4"></div>
+                            <div class="col-4" >
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+<ng-template #resetpass let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Task</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeModalFunction(editForm)"></button>  
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="modal-body">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="fw-bold">password</label>
+            <input type="text" formControlName="pass1" class="form-control" type="password" />
+            <div *ngIf="(editForm.controls.pass1.touched || editSubmitted) && editForm.controls.pass1.errors" class="invalid">
+                <div *ngIf=" (editForm.controls.pass1.touched || editSubmitted) && (editForm.controls.pass1.errors['required'])">* password is required</div>
+                <div *ngIf=" (editForm.controls.pass1.touched || editSubmitted) && (editForm.controls.pass1.errors['pattern'])">* strong password required</div>
+              </div>
+        </div>
+            <div class="form-group">
+                <label class="fw-bold">Re-enter password</label>
+                <input type="text" formControlName="pass2" class="form-control"  type="password"/>
+                <div *ngIf="(editForm.controls.pass1.touched || editSubmitted) && editForm.controls.pass2.errors" class="invalid">
+                    <div *ngIf=" (editForm.controls.pass2.touched || editSubmitted) && (editForm.controls.pass2.errors['required'])">* password is required</div>
+                    <div *ngIf=" (editForm.controls.pass2.touched || editSubmitted) && (editForm.controls.pass2.errors['pattern'])">* strong password required</div>
+                  </div>
+            </div>
+            <div *ngIf="(editForm.controls.pass2.touched || editForm.controls.pass1.touched) && editForm.invalid">
+                <p>A strong password should have a minimum length, typically at least 8 characters,
+                  It should contain at least one uppercase letter, one lowercase letter, one number, one special character (e.g., !, @, #, $)</p>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModalFunction(editForm)">Close</button>
+        <button type="button" class="btn btn-secondary" type="submit">edit</button>
+    
+      </div>
+    </form>
+    </ng-template>
