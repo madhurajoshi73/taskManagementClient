@@ -1,4 +1,4 @@
-//database query
+//database query temporary
 
 import pool from './db.js'
 const status={

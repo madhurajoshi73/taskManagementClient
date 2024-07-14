@@ -87,6 +87,9 @@ addTask() {
     }
     this.authService.addTask(data).subscribe({next: (res: any)=>{
       this.modalService.dismissAll();
+      this.addForm.reset();
+      this.filter='all'
+      this.prio='all'
       this.getAllTask();
       this.toastrUtilService.showSuccess("","Add Successfully")
     },

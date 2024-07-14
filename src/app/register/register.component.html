@@ -21,6 +21,7 @@
                          placeholder="Username"/>
                          <div *ngIf="loginForm.controls.email.errors && (submitted || loginForm.controls.email.touched)" class="invalid">
                           <div *ngIf="loginForm.controls.email.errors['required']">email is required</div>
+                          <div *ngIf="loginForm.controls.email.errors['email']">enter valid email id</div>
                         </div>
                     </div>
                     <div class="form-group mb-3" aria-label="Password block">
@@ -30,11 +31,11 @@
                       <div *ngIf="loginForm.controls.password.errors && (submitted || loginForm.controls.password.touched)" class="invalid">
                         <div *ngIf="loginForm.controls.password.errors['required']">Password is required</div>
                         <div *ngIf="loginForm.controls.password.errors['minlength']">
-                          <div *ngIf="loginForm.controls.password.touched && (loginForm.controls.password.errors && loginForm.controls.password.errors['pattern'])">
-                            <p>A strong password should have a minimum length, typically at least 8 characters,
-                              It should contain at least one uppercase letter, one lowercase letter, one number, one special character (e.g., !, @, #, $)</p>
-                          </div>
                         </div>
+                      </div>
+                      <div >
+                        <p>A strong password should have a minimum length, typically at least 8 characters,
+                          It should contain at least one uppercase letter, one lowercase letter, one number, one special character (e.g., !, @, #, $)</p>
                       </div>
                     </div>
                       <div class="form-group mb-3" aria-label="Role block">

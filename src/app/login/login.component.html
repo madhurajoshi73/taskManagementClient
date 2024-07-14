@@ -5,9 +5,9 @@
           <h2>LOG IN</h2>
                 <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                   <div class="form-group mb-3" aria-label="Username block">
-                    <label for="username">Username</label>
+                    <label for="username">Email</label>
                     <input type="text" class="form-control" name="username" formControlName ="username" required minlength="3"
-                       placeholder="Username"/>
+                       placeholder="email"/>
                        <div *ngIf="loginForm.controls.username.errors && (submitted || loginForm.controls.username.touched)" class="invalid">
                         <div *ngIf="loginForm.controls.username.errors['required']">username is required</div>
                         <div *ngIf="loginForm.controls.username.errors['minlength']">

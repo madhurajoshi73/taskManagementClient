@@ -10,3 +10,5 @@ export const ApiUrl: any = {
     RESET: 'reset',
     GET_USER: 'getUser',
 }
+
+export const API_BASE_URL= 'api/'

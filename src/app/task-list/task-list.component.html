@@ -62,7 +62,7 @@
                                 </td>
                                 <td class="labletext">{{task.description}}</td>
                                 <td class="labletext">{{task.created_time| date}}</td>
-                                <td class="labletext">{{task.status==='active'?'In-progress':task.status}}</td>
+                                <td class="labletext">{{task.status==='active'?'In-progress':task.status|titlecase}}</td>
                                 <td class="labletext">{{task.priority}}</td>
                                 <td >
                                   <button type="button" class="btn btn-link" (click)="openViewModalFunction(viewTaskModal, task)">
@@ -200,31 +200,39 @@
   </div>
   <div class="container">
     <div class="row p-2 m-2">
-      <div class="col-4">
+      <div class="col-5">
         <label class="fw-bold">Title</label>
     </div>
-      <div class="col-8 labletext">
+      <div class="col-7 labletext">
         <label>{{viewTask.title}}</label>
     </div>
     </div>
     <div class="row p-2 m-2">
-      <div class="col-4">
+      <div class="col-5">
         <label class="fw-bold">Description</label>
     </div>
-      <div class="col-8 labletext">
+      <div class="col-7 labletext">
         <label>{{viewTask.description}}</label>
     </div>
   </div>
     <div class="row p-2 m-2">
-        <div class="col-4">
+        <div class="col-5">
           <label class="fw-bold">Status</label>
       </div>
-        <div class="col-8 labletext">
-          <label>{{viewTask.status}}</label>
+        <div class="col-7 labletext">
+          <label>{{viewTask.status|titlecase}}</label>
       </div>
     </div>
     <div class="row p-2 m-2">
-      <div class="col-4">
+      <div class="col-5">
+        <label class="fw-bold">Priority</label>
+    </div>
+      <div class="col-7 labletext">
+        <label>{{viewTask.priority|titlecase}}</label>
+    </div>
+  </div>
+    <div class="row p-2 m-2">
+      <div class="col-5">
         <label class="fw-bold">Date</label>
     </div>
       <div class="col-6">

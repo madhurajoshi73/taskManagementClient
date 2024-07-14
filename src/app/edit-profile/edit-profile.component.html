@@ -57,14 +57,14 @@
 </div>
 <ng-template #resetpass let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add Task</h4>
+      <h4 class="modal-title" id="modal-basic-title">Reset password</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="closeModalFunction(editForm)"></button>  
     </div>
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <div class="modal-body">
         <div class="modal-body">
           <div class="form-group">
-            <label class="fw-bold">password</label>
+            <label class="fw-bold">Password</label>
             <input type="text" formControlName="pass1" class="form-control" type="password" />
             <div *ngIf="(editForm.controls.pass1.touched || editSubmitted) && editForm.controls.pass1.errors" class="invalid">
                 <div *ngIf=" (editForm.controls.pass1.touched || editSubmitted) && (editForm.controls.pass1.errors['required'])">* password is required</div>

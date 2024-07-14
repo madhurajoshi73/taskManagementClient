@@ -8,10 +8,12 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Database
 
+Postgres-SQL is used for database
 Run master Database file, db file path `taskManagementClient/server/dump/master.sql`
 
 ## Backend
 
+Nodejs
 Run `node .` for backend server. server will be deployed on `http://localhost:3000/`
 
 ## Code scaffolding

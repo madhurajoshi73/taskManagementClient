@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiUrl } from '../constants/apiUrl';
+import { ApiUrl, API_BASE_URL } from '../constants/apiUrl';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class AuthService {
       username: username,
       password: password,
     };
-    let url = ApiUrl.SIGN_IN;
+    let url = API_BASE_URL+ApiUrl.SIGN_IN;
     return this.httpService.makeHttpPostRequestWithoutToken(url, data);
   }
 
@@ -27,43 +27,43 @@ export class AuthService {
       role: role,
       email: email
     };
-    let url = ApiUrl.SIGN_UP;
+    let url = API_BASE_URL+ApiUrl.SIGN_UP;
 
     return this.httpService.makeHttpPostRequestWithoutToken(url, data);
   }
 
   logout(): Observable<any> {
-    let url = ApiUrl.SIGN_OUT;
+    let url = API_BASE_URL+ApiUrl.SIGN_OUT;
     return this.httpService.makeHttpPostRequestWithToken(url);
   }
 
   addTask(data: any) : Observable<any>{
-    let url = ApiUrl.ADD_TASK;
+    let url = API_BASE_URL+ApiUrl.ADD_TASK;
     return this.httpService.makeHttpPostRequestWithToken(url, data);
   }
 
   getTask() : Observable<any>{
-    let url = ApiUrl.GET_TASK;
+    let url = API_BASE_URL+ApiUrl.GET_TASK;
     return this.httpService.makeHttpPostRequestWithToken(url);
   }
   editTask(data: any) : Observable<any>{
-    let url = ApiUrl.EDIT_TASK;
+    let url = API_BASE_URL+ApiUrl.EDIT_TASK;
     return this.httpService.makeHttpPostRequestWithToken(url,data);
   }
   getFilterTask(status:any) : Observable<any>{
-    let url = ApiUrl.GET_FILTER;
+    let url = API_BASE_URL+ApiUrl.GET_FILTER;
     return this.httpService.makeHttpPostRequestWithToken(url, status);
   }
   delTask(id: any): Observable<any>{
-    let url = ApiUrl.DEL_TASK;
+    let url = API_BASE_URL+ApiUrl.DEL_TASK;
     return this.httpService.makeHttpDeleteRequestWithToken(url, id);
   }
   resetPass(pass: any): Observable<any>{
-    let url = ApiUrl.RESET;
+    let url = API_BASE_URL+ApiUrl.RESET;
     return this.httpService.makeHttpPostRequestWithToken(url, pass);
   }
   getUser(user: any): Observable<any>{
-    let url = ApiUrl.GET_USER;
+    let url = API_BASE_URL+ApiUrl.GET_USER;
     return this.httpService.makeHttpGetRequestWithToken(url, user);
   }
 }
