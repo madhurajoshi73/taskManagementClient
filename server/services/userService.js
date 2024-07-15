@@ -32,14 +32,14 @@ userRoutes.post('/register',  (req, res) => {
 //login api
 userRoutes.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    userRepo.getuser(username).then((user)=>
+     userRepo.getuser(username).then(async (user)=>
     {
     if(!user || user.rows?.length==0){
         res.status(500).json({ error: 'user not found' });
     }
     else{
         user = user.rows[0]
-        const passwordMatch = bcrypt.compare(password, user.password);
+        const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             return res.status(401).json({ error: 'Invalid credentials' });
           }
