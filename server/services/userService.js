@@ -11,7 +11,7 @@ const userRoutes = express.Router()
 userRoutes.post('/register',  (req, res) => {
     const { email, username, password, role } = req.body;
     userRepo.getuser(email).then(async (user)=>{
-        if(user && user.length>0){
+        if(user && user?.rows?.length>0){
           res.status(500).json({ error: 'user name exist' });
         }
         else{
@@ -75,6 +75,7 @@ userRoutes.post('/reset',authenticateToken,async  (req, res) => {
  
  //get user api
  userRoutes.get('/getUser', authenticateToken, async (req, res) => {
+    console.log(req)
     userRepo.getuserbyid(req.user.id).then((user)=>{
      if (!user || user.rows.length==0) {
      return res.status(404).json({ error: 'Invalid access' });

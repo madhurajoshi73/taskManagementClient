@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/login'])
       },
       error: err=>{
-          this.toastrUtilService.showError("","login failed")
+          this.toastrUtilService.showError("",err.error.error)
       }
     })
     }

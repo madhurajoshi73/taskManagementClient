@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate{
     if (this.storageService.isLoggedIn()) {
 
       let user = this.storageService.getUser();
-      let role = user.role[0];
+      let role = user.role;
 
       if (route.data['requiredRoles']) {
         const requiredRoles = route.data['requiredRoles'];
@@ -35,7 +35,7 @@ export class AuthGuard implements CanActivate{
             }, 1000);
             return false;
           } 
-
+          return true
         } else {
           this.redirectingLoggedInUserToDashboard(role);
           return true;

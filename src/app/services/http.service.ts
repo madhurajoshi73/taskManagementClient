@@ -27,7 +27,6 @@ export class HttpService {
     return this.makeHttpRequest(url, 'GET', data, true, timeOut);
   }
   private makeHttpRequest(url: string, requestMethod: string, data?: any, needToken?: boolean, timeOut?: any, isMediaPost?: any, testApiAccessToken?: any) {
-    timeOut = timeOut || 30000;
     url = this.baseUrl + url;
     let httpOptions: any;
     let contentType = { 
@@ -57,7 +56,6 @@ export class HttpService {
                     params = params.append(key, data[key].toString());
                 }
             }
-            // requestOptions.clone({params:params});
             httpOptions['params'] = params;
         }
     }
